@@ -7,4 +7,13 @@ describe('Async component', () => {
         const listItemElements = await screen.findAllByRole('listitem'); // return Promise
         expect(listItemElements).not.toHaveLength(0);
     })
+    test('renders posts if request succeeds with Mock', async () => {
+        window.fetch = jest.fn();
+        window.fetch.mockResolvedValueOnce({
+            json: async () => [{id: 'p1', title: 'first post'}]
+        });
+        render(<Async/>);
+        const listItemElements = await screen.findAllByRole('listitem'); // return Promise
+        expect(listItemElements).not.toHaveLength(0);
+    })
 });
